@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Username Input Section -->
+  <div id="username-container">
+    <h1 class="appTitle">RANDO QUIZ</h1>
+    <label for="username">Enter Username:</label>
+    <input type="text" id="username" placeholder="Your username">
+    <h3>Click on the bubble to select an answer</h3>
+    <button class="startQuiz" id="start-quiz">Start Quiz!</button>
+  </div>
+
+  <!-- Quiz Section -->
+  <div id="quiz-container" style="display: none;">
+    <h2 id="username-display"></h2>
+    <h3 id="question-text"></h3>
+    <p>Questions Left: <span id="questions-left"></span></p>
+    <ul id="choices"></ul>
+    <button id="submit-answer">Submit Answer</button>
+    <p>Score: <span id="score">0</span></p>
+  </div>
+
+  <!-- Quiz Complete Section -->
+  <div id="quiz-complete" style="display: none;">
+    <h2>Quiz Complete!</h2>
+    <p>Your final score is <span id="final-score"></span>.</p>
+    <button id="restart-quiz">Restart Quiz</button>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

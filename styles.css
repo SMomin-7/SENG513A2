@@ -1,0 +1,182 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f9f9f9;
+  color: #333;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* App Title */
+.appTitle {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin: 50px auto 20px auto;
+  color: #FF9800;
+}
+
+/* Username Input Section */
+#username-container {
+  max-width: 400px;
+  margin: 70px auto;
+  background-color: #fff;
+  padding: 25px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  border-radius: 15px;
+}
+
+#username-container input {
+  border-radius: 8px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  width: 80%;
+  max-width: 300px;
+  margin-top: 10px;
+  text-align: center;
+  display: block;
+  margin: 15px auto;
+}
+
+/* Quiz Section */
+#quiz-container {
+  max-width: 600px;
+  margin: 50px auto;
+  background-color: #fff;
+  padding: 25px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  border-radius: 15px;
+  text-align: center;
+}
+
+#question-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+#questions-left {
+  font-weight: bold;
+  color: #FF9800;
+}
+
+/* Choices Styling */
+#choices {
+  list-style-type: none;
+  padding: 0;
+}
+
+#choices li {
+  margin: 10px auto;
+  max-width: 320px;
+  background-color: #fff;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  position: relative;
+}
+
+/* Hide radio buttons */
+#choices input[type="radio"] {
+  display: none;
+}
+
+/* Style labels for radio buttons */
+#choices label {
+  display: block;
+  padding: 12px;
+  cursor: pointer;
+  font-size: 1rem;
+  border-radius: 15px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+/* Highlight selected answer (before submission) */
+#choices input[type="radio"]:checked + label {
+  background: #FF9800;
+  color: white;
+  font-weight: bold;
+  transform: scale(1.05);
+}
+
+/* FIX: Override selected color after submission */
+#choices input[type="radio"]:checked:disabled + label {
+  background: none; /* Remove yellow */
+  color: inherit; /* Keep default text color */
+  transform: none;
+}
+
+/* Correct & Wrong Answer Highlighting */
+.correct {
+  background-color: #4CAF50 !important; /* Green */
+  color: white !important;
+  font-weight: bold;
+  border-radius: 12px;
+  padding: 8px;
+}
+
+.wrong {
+  background-color: #E53935 !important; /* Red */
+  color: white !important;
+  font-weight: bold;
+  border-radius: 12px;
+  padding: 8px;
+}
+
+/* Disable further clicks after selection */
+.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* Buttons */
+button {
+  margin: 12px 5px;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 25px;
+  background: #FF9800;
+  color: #fff;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background: #bb7308;
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+/* Hide next button initially */
+#next-question {
+  display: none;
+}
+
+/* Score Display */
+#score {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #4CAF50;
+}
+
+/* Quiz Completion Section */
+#quiz-complete {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+#final-score {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #FF9800;
+}

@@ -1,10 +1,9 @@
 export class Quiz {
   constructor(questions) {
-    this.questions = questions;
+    this.questions = questions.sort((a, b) => a.difficulty - b.difficulty); // Sort questions by difficulty
     this.currentQuestionIndex = 0;
     this.score = 0;
-    this.answers = []; // Store selected answers
-    this.startTime = new Date(); // Track when quiz starts
+    this.askedQuestions = new Set(); // Track which questions have been asked
   }
 
   getCurrentQuestion() {
@@ -13,33 +12,51 @@ export class Quiz {
 
   checkAnswer(answer) {
     const currentQuestion = this.getCurrentQuestion();
-    this.answers.push({ 
-      question: currentQuestion.text, 
-      selected: answer, 
-      correct: currentQuestion.isCorrectAnswer(answer)
-    });
-
     if (currentQuestion.isCorrectAnswer(answer)) {
       this.score++;
     }
   }
 
-  moveToNextQuestion() {
-    // ✅ Fix: Allow last question to be answered before stopping
-    if (this.currentQuestionIndex < this.questions.length - 1) {
-      this.currentQuestionIndex++;
+  moveToNextQuestion(isCorrect) {
+    // Mark the current question as asked
+    this.askedQuestions.add(this.currentQuestionIndex);
+
+    // Find the next question based on difficulty
+    if (isCorrect) {
+      // Move to a harder question
+      this.currentQuestionIndex = this.findNextQuestion(this.currentQuestionIndex + 1);
+    } else {
+      // Move to an easier question
+      this.currentQuestionIndex = this.findNextQuestion(this.currentQuestionIndex - 1);
     }
   }
 
+  findNextQuestion(startIndex) {
+    // Find the next unasked question within the valid range
+    for (let i = startIndex; i >= 0 && i < this.questions.length; i += (startIndex < this.currentQuestionIndex ? -1 : 1)) {
+      if (!this.askedQuestions.has(i)) {
+        return i;
+      }
+    }
+
+    // If no unasked question is found in the desired direction, find the closest unasked question
+    for (let i = 0; i < this.questions.length; i++) {
+      if (!this.askedQuestions.has(i)) {
+        return i;
+      }
+    }
+
+    // If all questions have been asked, return -1 (quiz is over)
+    return -1;
+  }
+
   isQuizOver() {
-    // ✅ Fix: Return true **only** after the last question is submitted
-    return this.currentQuestionIndex >= this.questions.length;
+    return this.askedQuestions.size >= this.questions.length || this.currentQuestionIndex === -1;
   }
 
   restartQuiz() {
     this.currentQuestionIndex = 0;
     this.score = 0;
-    this.answers = [];
-    this.startTime = new Date();
+    this.askedQuestions.clear();
   }
 }

@@ -17,15 +17,19 @@ export async function fetchQuestions() {
 
     const data = await response.json();
 
-    return data.results.map((q) => {
+    return data.results.map((q, index) => {
       let choices = [...q.incorrect_answers, q.correct_answer]
         .map(decodeHTML) // Decode each choice
-        .sort(() => Math.random() - 0.5); // Randomizing choices
+        .sort(() => Math.random() - 0.5); // Randomize choices
+
+      // Assign a difficulty level based on the question index (for demonstration purposes)
+      const difficulty = (index % 3) + 1; // 1 = easy, 2 = medium, 3 = hard
 
       return new Question(
         decodeHTML(q.question), // Decode question text
         choices,
-        decodeHTML(q.correct_answer) // Decode correct answer
+        decodeHTML(q.correct_answer), // Decode correct answer
+        difficulty // Add difficulty level
       );
     });
 

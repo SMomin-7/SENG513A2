@@ -4,7 +4,7 @@ import { QuizUI } from "./modules/QuizUI.js";
 import { User } from "./modules/User.js";
 
 async function initializeQuiz() {
-  const usernameContainer = document.getElementById("username-container"); 
+  const usernameContainer = document.getElementById("username-container");
   const usernameInput = document.getElementById("username");
   const startQuizButton = document.getElementById("start-quiz");
   const quizContainer = document.getElementById("quiz-container");
@@ -31,36 +31,21 @@ async function initializeQuiz() {
     const quiz = new Quiz(questions);
     const quizUI = new QuizUI(quiz, user);
 
-    usernameContainer.style.display = "none"; 
-    quizContainer.style.display = "block"; 
+    // Reset the UI for a new quiz
+    quizUI.resetUI();
 
-    quizUI.renderQuestion();
+    usernameContainer.style.display = "none";
+    quizContainer.style.display = "block";
+
+    // Start the generator function for quiz flow
+    const questionFlow = quizUI.createQuestionFlow();
+    questionFlow.next(); // Start the flow
   });
 
-  restartQuizButton.addEventListener("click", async () => {
+  restartQuizButton.addEventListener("click", () => {
     if (confirm("Are you sure you want to restart?")) {
-      // Reset UI
-      usernameContainer.style.display = "block";
-      quizContainer.style.display = "none";
-      quizComplete.style.display = "none";
-      usernameInput.value = "";             // Clear username input
-
-      // Fetch new questions and reset the quiz
-      const newQuestions = await fetchQuestions();
-      if (newQuestions.length === 0) {
-        alert("Failed to reload questions. Please try again.");
-        return;
-      }
-
-      // Reset the quiz instance completely
-      window.quiz = new Quiz(newQuestions);
-      window.quizUI = new QuizUI(window.quiz, new User("Guest"));
-
-      // Clear previous event listener and reapply
-      restartQuizButton.removeEventListener("click", restartQuiz);
-      restartQuizButton.addEventListener("click", restartQuiz);
-
-      window.quizUI.renderQuestion();
+      // Refresh the page to start a new quiz
+      location.reload();
     }
   });
 }

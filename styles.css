@@ -1,10 +1,21 @@
-/* General Styles */
+/* General Dark Theme Styles */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
   margin: 0;
-  background: #f9f9f9;
-  color: #333;
+  background: #121212; /* Dark Mode Background */
+  color: #E0E0E0;
   line-height: 1.6;
+  text-align: center;
+}
+
+/* Card-Style Containers */
+#username-container, #quiz-container, #quiz-complete {
+  max-width: 450px;
+  margin: 70px auto;
+  background-color: #1E1E1E; /* Dark card background */
+  padding: 25px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
   text-align: center;
 }
 
@@ -12,24 +23,15 @@ body {
 .appTitle {
   font-size: 2.2rem;
   font-weight: bold;
-  margin: 50px auto 20px auto;
+  margin-bottom: 15px;
   color: #FF9800;
 }
 
 /* Username Input Section */
-#username-container {
-  max-width: 400px;
-  margin: 70px auto;
-  background-color: #fff;
-  padding: 25px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-  border-radius: 15px;
-}
-
 #username-container input {
   border-radius: 8px;
   padding: 12px;
-  border: 1px solid #ccc;
+  border: 1px solid #555;
   font-size: 16px;
   width: 80%;
   max-width: 300px;
@@ -37,28 +39,15 @@ body {
   text-align: center;
   display: block;
   margin: 15px auto;
+  background: #2E2E2E; /* Dark input */
+  color: #fff;
 }
 
 /* Quiz Section */
-#quiz-container {
-  max-width: 600px;
-  margin: 50px auto;
-  background-color: #fff;
-  padding: 25px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-  border-radius: 15px;
-  text-align: center;
-}
-
 #question-text {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 15px;
-}
-
-#questions-left {
-  font-weight: bold;
-  color: #FF9800;
 }
 
 /* Choices Styling */
@@ -70,14 +59,19 @@ body {
 #choices li {
   margin: 10px auto;
   max-width: 320px;
-  background-color: #fff;
+  background-color: #2E2E2E; /* Dark option background */
   padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 15px;
+  border: 1px solid #444;
+  border-radius: 12px;
   font-size: 1rem;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s ease;
   position: relative;
+}
+
+/* Hover Effect */
+#choices li:hover {
+  background: #3A3A3A;
 }
 
 /* Hide radio buttons */
@@ -91,31 +85,31 @@ body {
   padding: 12px;
   cursor: pointer;
   font-size: 1rem;
-  border-radius: 15px;
+  border-radius: 12px;
   transition: background 0.3s ease, transform 0.2s ease;
 }
 
-/* Highlight selected answer (before submission) */
+/* Selected Option (Before Submit) */
 #choices input[type="radio"]:checked + label {
-  background: #FF9800;
+  background: #444; /* Highlighted Gray */
   color: white;
   font-weight: bold;
   transform: scale(1.05);
 }
 
-/* FIX: Override selected color after submission */
+/* Fix Selected Color After Submission */
 #choices input[type="radio"]:checked:disabled + label {
-  background: none; /* Remove yellow */
-  color: inherit; /* Keep default text color */
+  background: none;
+  color: inherit;
   transform: none;
 }
 
-/* Correct & Wrong Answer Highlighting */
+/* Correct & Wrong Answer Styling */
 .correct {
   background-color: #4CAF50 !important; /* Green */
   color: white !important;
   font-weight: bold;
-  border-radius: 12px;
+  border-radius: 10px;
   padding: 8px;
 }
 
@@ -123,7 +117,7 @@ body {
   background-color: #E53935 !important; /* Red */
   color: white !important;
   font-weight: bold;
-  border-radius: 12px;
+  border-radius: 10px;
   padding: 8px;
 }
 
@@ -167,16 +161,22 @@ button:active {
   color: #4CAF50;
 }
 
-/* Quiz Completion Section */
+/* Quiz Completion Section - Enlarged */
 #quiz-complete {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 1.3rem;
-  font-weight: bold;
+  max-width: 500px;
+  padding: 35px;
+  border-radius: 20px;
 }
 
 #final-score {
-  font-size: 1.6rem;
+  font-size: 2rem;
   font-weight: bold;
   color: #FF9800;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+  #username-container, #quiz-container, #quiz-complete {
+    max-width: 90%;
+  }
 }

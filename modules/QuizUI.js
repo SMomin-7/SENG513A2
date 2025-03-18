@@ -10,21 +10,21 @@ export class QuizUI {
       this.questionsLeftDisplay = document.getElementById("questions-left");
       this.quizContainer = document.getElementById("quiz-container");
       this.quizComplete = document.getElementById("quiz-complete");
-      this.finalScoreDisplay = document.getElementById("final-score");
+      this.finalScoreDisplay = document.getElementById("final-score"); //Constructor, make the UI elements accessible to the backend using this method
   
-      // Bind the context of `this` for event listeners
+      //Bind context of "this" for event listeners
       this.handleSubmit = this.handleSubmit.bind(this);
       this.handleNext = this.handleNext.bind(this);
   
       this.submitButton.addEventListener("click", this.handleSubmit);
-      this.nextButton.addEventListener("click", this.handleNext);
+      this.nextButton.addEventListener("click", this.handleNext);//Add event listeners
     }
   
-    // Generator function to manage quiz flow
+    //Quiz creator function
     *createQuestionFlow() {
       while (!this.quiz.isQuizOver()) {
         this.renderQuestion();
-        yield; // Wait for user input
+        yield; //yield will wait for user input
       }
       this.showFinalResults();
     }
@@ -35,7 +35,7 @@ export class QuizUI {
         const currentQuestion = this.quiz.getCurrentQuestion();
         const isCorrect = currentQuestion.isCorrectAnswer(selectedAnswer);
   
-        // Highlight correct/wrong answers
+        //Correct and incorrect answers can be highlighted
         const choices = document.querySelectorAll('input[name="answer"]');
         choices.forEach((choice) => {
           const label = choice.parentElement;
@@ -52,23 +52,22 @@ export class QuizUI {
           choice.disabled = true;
         });
   
-        // Update score if correct
+        //If our ans was corect, update the score
         this.quiz.checkAnswer(selectedAnswer);
         this.scoreDisplay.textContent = this.quiz.score;
   
-        // Hide the "Submit" button
+        //Disable the submit button once our score is updated
         this.submitButton.style.display = "none";
   
-        // Check if this is the last question
+        //We can check if this was the last question of the quiz, and take the next steps
         const isLastQuestion = this.quiz.currentQuestionIndex === this.quiz.questions.length - 1;
   
         if (isLastQuestion) {
-          // Automatically show final results after 1 second
           setTimeout(() => {
             this.showFinalResults();
           }, 1000);
         } else {
-          // Show the "Next Question" button
+          //findal results shown and next button displayed
           this.nextButton.style.display = "inline-block";
         }
       }
@@ -76,11 +75,11 @@ export class QuizUI {
   
     handleNext() {
       if (!this.quiz.isQuizOver()) {
-        // Hide the "Next Question" button and show the "Submit" button
+        //Hide the next button adn show the submit button
         this.nextButton.style.display = "none";
         this.submitButton.style.display = "inline-block";
   
-        // Move to the next question
+        //Go to next q
         this.quiz.moveToNextQuestion();
         this.renderQuestion();
       } else {
@@ -93,7 +92,7 @@ export class QuizUI {
       this.quizComplete.style.display = "block";
       this.finalScoreDisplay.textContent = this.quiz.score;
   
-      // Reset score display for next quiz attempt
+      //Score reset after new quiz
       this.scoreDisplay.textContent = "0";
   
       this.quiz.restartQuiz();
@@ -115,10 +114,10 @@ export class QuizUI {
         )
         .join("");
   
-      // Update questions left counter
+
       this.questionsLeftDisplay.textContent = this.quiz.questions.length - this.quiz.askedQuestions.size;
   
-      // Enable submit button and remove old styles
+      //This allows us to reenable the submit button
       this.submitButton.disabled = false;
   
       const labels = document.querySelectorAll("#choices li label");
@@ -126,38 +125,29 @@ export class QuizUI {
         label.classList.remove("correct", "wrong");
       });
   
-      // Hide the "Next Question" button for the last question
+      //Hiding next question button once quiz ends
       if (this.quiz.isQuizOver()) {
         this.nextButton.style.display = "none";
       }
     }
   
-    // Reset UI for a new quiz
+    //allows us to reset ui if needed
     resetUI() {
-      console.log("Resetting UI..."); // Debugging
-  
-      // Clear the question text and choices
+      //Clear q text and all choices once reset
       this.questionText.textContent = "";
       this.choicesList.innerHTML = "";
   
-      // Reset button visibility
+
       this.submitButton.style.display = "inline-block";
-      this.nextButton.style.display = "none";
-  
-      // Reset score and questions left display
+      this.nextButton.style.display = "none"; //Makes buttons, scores, and tests visible
       this.scoreDisplay.textContent = "0";
       this.questionsLeftDisplay.textContent = this.quiz.questions.length;
-  
-      // Show the quiz container and hide the quiz complete section
+
       this.quizContainer.style.display = "block";
-      this.quizComplete.style.display = "none";
-  
-      // Clear any selected answer
+      this.quizComplete.style.display = "none";//Quiz complete section will hide behind quiz container, and clear selected answers
       const selectedAnswer = document.querySelector('input[name="answer"]:checked');
       if (selectedAnswer) {
         selectedAnswer.checked = false;
       }
-  
-      console.log("UI reset complete."); // Debugging
     }
   }
